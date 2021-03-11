@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useList } from "react-firebase-hooks/database";
 import TutorialDataService from "../services/TutorialService";
 import Tutorial from "./Tutorial";
+import P5Wrapper from 'react-p5-wrapper'
+import sketch from './Sketch';
 
 const TutorialsList = () => {
   const [currentTutorial, setCurrentTutorial] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
+  const [state, setState] = useState({ rotation: 160, sketch });
 
   /* use react-firebase-hooks */
   const [tutorials, loading, error] = useList(TutorialDataService.getAll());
@@ -41,6 +44,15 @@ const TutorialsList = () => {
   return (
     <div className="list row">
       <div className="col-md-6">
+        <P5Wrapper sketch={state.sketch} rotation={state.rotation} />
+        <input
+          type="range"
+          defaultValue={state.rotation}
+          min="0"
+          max="360"
+          step="1"
+          onChange={event => setState({ ...state, rotation: event.target.value })}
+        />
         <h4>Tutorials List</h4>
 
         {error && <strong>Error: {error}</strong>}
