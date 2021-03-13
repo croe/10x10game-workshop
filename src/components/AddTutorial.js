@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import DatabaseService from '../services/TutorialService'
+import { CirclePicker } from 'react-color'
+import { Link } from 'react-router-dom'
 
 const AddTutorial = () => {
   const initialTutorialState = {
-    title: "",
-    description: "",
-    published: false
+    name: "",
+    color: "",
+    x: 0,
+    y: 0,
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
@@ -16,10 +19,11 @@ const AddTutorial = () => {
   };
 
   const saveTutorial = () => {
-    var data = {
-      title: tutorial.title,
-      description: tutorial.description,
-      published: false
+    let data = {
+      name: tutorial.name,
+      color: tutorial.color,
+      x: 1,
+      y: 1,
     };
 
     DatabaseService.create(data)
@@ -36,8 +40,13 @@ const AddTutorial = () => {
     setSubmitted(false);
   };
 
+  const handleChange = (color, event) => {
+    console.log(color, tutorial)
+    setTutorial({...tutorial, color: color.hex})
+  }
+
   return (
-    <div className="submit-form">
+    <div className="submit-form pt-4">
       {submitted ? (
         <div>
           <h4>You submitted successfully!</h4>
@@ -48,34 +57,29 @@ const AddTutorial = () => {
       ) : (
         <div>
           <div className="form-group">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="name">Player name</label>
             <input
               type="text"
               className="form-control"
-              id="title"
+              id="name"
               required
-              value={tutorial.title}
+              value={tutorial.name}
               onChange={handleInputChange}
-              name="title"
+              name="name"
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              required
-              value={tutorial.description}
-              onChange={handleInputChange}
-              name="description"
-            />
+            <CirclePicker onChange={handleChange} />
           </div>
 
           <button onClick={saveTutorial} className="btn btn-success">
             Submit
           </button>
+          <div className="mt-2">
+            <Link to="/">戻る</Link>
+          </div>
         </div>
       )}
     </div>

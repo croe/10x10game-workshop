@@ -1,6 +1,6 @@
 import firebase from '../firebase'
 
-const db = firebase.ref('/player')
+const db = firebase.ref('/question')
 
 const getAll = () => {
   return db;
