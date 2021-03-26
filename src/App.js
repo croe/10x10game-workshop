@@ -7,7 +7,7 @@ import TutorialsList from "./components/TutorialsList";
 
 function App() {
   return (
-    <div>
+    <div className="fixed_window">
       <Switch>
         <Route exact path="/" component={TutorialsList} />
         <Route exact path="/add" component={AddTutorial} />

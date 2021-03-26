@@ -64,8 +64,8 @@ const TutorialsList = () => {
 
   const newGame = () => {
     let data = {
-      row: [...Array(10)].map(() => Math.floor(Math.random() * 10)),
-      col: [...Array(10)].map(() => Math.floor(Math.random() * 10)),
+      row: [...Array(10)].map(() => Math.floor(Math.random() * 9) + 1),
+      col: [...Array(10)].map(() => Math.floor(Math.random() * 9) + 1),
       answer: [...Array(10)].map(() => [...Array(10)].map(() => 0))
     };
     const gameKey = question.map(q => q.key)[0];
@@ -89,7 +89,7 @@ const TutorialsList = () => {
 
   return (
     <div>
-      <div className="p-4">
+      <div className="p-4 d-flex">
         <P5Wrapper
           sketch={state.sketch}
           players={tutorials}
@@ -98,6 +98,7 @@ const TutorialsList = () => {
           updatePlayer={handleUpdatePlayer}
           updateQuest={handleUpdateQuest}
         />
+        <div className="pl-4">
         {error && <strong>Error: {error}</strong>}
         {loading && <span>Loading...</span>}
         <ul className="list-group">
@@ -152,6 +153,7 @@ const TutorialsList = () => {
         >
           Calculate!
         </button>
+        </div>
       </div>
     </div>
   );
